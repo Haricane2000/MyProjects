@@ -4,6 +4,6 @@
 
 .car{
     width: 50px;
-    height: 100px;
-    background: transparent url('./image/player.png') center/cover no-repeat;
+    height: 105px;
+    background: transparent url('./image/MyPlayer.png') center/cover no-repeat;
 }
