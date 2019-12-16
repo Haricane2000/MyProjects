@@ -18,16 +18,19 @@ const keys = {
     ArrowLeft: false
 };
 
+const enemyset ={};
 const setting = {
     start: false,
     score: 0,
-    speed: 3,
-    traffic:3
+    speed: 5,
+    traffic:1
 };
 
 function getQuantityElements(heightElemeent){
     return document.documentElement.clientHeight/heightElemeent+1;
 }
+
+
 
 function startGame(){
     start.classList.add("hide");
@@ -41,11 +44,15 @@ gameArea.appendChild(line);
     }
 
     for(let i=0; i<getQuantityElements(100*setting.traffic);i++){
+        
         const enemy= document.createElement('div');
         enemy.classList.add('enemy');
         enemy.y=-100*setting.traffic*(i+1);
+        
         enemy.style.left=Math.floor(Math.random()*(gameArea.offsetWidth-55))+'px';
         enemy.style.top=enemy.y+'px';
+        enemyset.x=enemy.offsetLeft;
+        enemyset.y=enemy.y;
         enemy.style.background = 'transparent url(./image/enemy2.png) center / cover no-repeat';
         gameArea.appendChild(enemy);
     }
@@ -62,7 +69,12 @@ gameArea.appendChild(line);
     if(setting.start){
         moveRoad();
         moveEnemy();
+if(setting.x>=(enemyset.x-35) & setting.x<=(enemyset.x+35) & setting.y>=(enemyset.y-100) & setting.y<=(enemyset.y+90)){
 
+    alert('Вы проиграли!');
+    setting.start=false;
+}
+else{
         if(keys.ArrowLeft && setting.x >0){
             setting.x-=setting.speed;
         }
@@ -78,6 +90,8 @@ gameArea.appendChild(line);
         car.style.left=setting.x+'px';
         car.style.top=setting.y+'px';
     requestAnimationFrame(playGame);
+    }
+    
     }
 }
 
@@ -111,6 +125,9 @@ function moveEnemy(){
         if(item.y>=document.documentElement.clientHeight){
             item.y=-100*setting.traffic-150;
             item.style.left=Math.floor(Math.random()*(gameArea.offsetWidth-55))+'px';
+            enemyset.x=item.offsetLeft;
+            enemyset.y=item.y;
+            console.log(enemyset.x);
         }
     })
 }
